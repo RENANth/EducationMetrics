@@ -1,4 +1,3 @@
-![Uploading image.png…]()
 
 # Scanner de Segurança Web
 
