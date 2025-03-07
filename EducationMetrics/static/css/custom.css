@@ -1,0 +1,41 @@
+/* Custom styles to complement Bootstrap dark theme */
+.card {
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.table-responsive {
+    margin-bottom: 1rem;
+}
+
+.alert {
+    border-radius: 8px;
+}
+
+/* Add some spacing for better readability */
+h4 {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Style for the results tables */
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Custom styling for the scan button */
+.btn-primary {
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+}
+
+/* Add some spacing between sections */
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Style for list groups */
+.list-group-item {
+    background-color: transparent;
+    border-color: rgba(255, 255, 255, 0.125);
+}

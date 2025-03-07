@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados do Scan</title>
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <link rel="stylesheet" href="/static/css/custom.css">
+</head>
+<body>
+    <div class="container py-4">
+        <h2 class="mb-4">Resultados do Scan para {{ target_url }}</h2>
+
+        <!-- Resultados do Reconhecimento -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>Resultados do Reconhecimento</h3>
+            </div>
+            <div class="card-body">
+                <h4>Cabeçalhos HTTP</h4>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Cabeçalho</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for header, value in results.recon.headers.items() %}
+                            <tr>
+                                <td>{{ header }}</td>
+                                <td>{{ value }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>Tecnologias Detectadas</h4>
+                <ul class="list-group">
+                    {% for tech in results.recon.technologies %}
+                    <li class="list-group-item">{{ tech }}</li>
+                    {% endfor %}
+                </ul>
+
+                <h4>Informações DNS</h4>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        {% for key, value in results.recon.dns_info.items() %}
+                        <tr>
+                            <td>{{ key }}</td>
+                            <td>{{ value }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resultados da Análise de Vulnerabilidades -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>Resultados da Análise de Vulnerabilidades</h3>
+            </div>
+            <div class="card-body">
+                {% for vuln_type, findings in results.vulnerabilities.items() %}
+                <h4>{{ vuln_type|title }}</h4>
+                {% if findings %}
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Localização</th>
+                                <th>Risco</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for finding in findings %}
+                            <tr>
+                                <td>{{ finding.form_action if finding.form_action else finding.parameter }}</td>
+                                <td>{{ finding.risk }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p>Nenhuma vulnerabilidade encontrada</p>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Resultados da Descoberta de Diretórios -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>Resultados da Descoberta de Diretórios</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>URL</th>
+                                <th>Código de Status</th>
+                                <th>Tipo de Conteúdo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dir in results.directories.discovered %}
+                            <tr>
+                                <td>{{ dir.url }}</td>
+                                <td>{{ dir.status_code }}</td>
+                                <td>{{ dir.content_type }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <a href="/" class="btn btn-primary">Novo Scan</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
